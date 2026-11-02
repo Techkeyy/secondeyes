@@ -1,44 +1,25 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
-import Link from 'next/link';
-import { WalletProvider } from '@/lib/wallet';
-import { WalletButton } from '@/components/WalletButton';
-import { CONTRACT_ID, NETWORK } from '@/lib/config';
+import { IBM_Plex_Mono, IBM_Plex_Sans, IBM_Plex_Sans_Condensed, Newsreader } from 'next/font/google';
 import './globals.css';
+import './print.css';
+
+const sans = IBM_Plex_Sans({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-sans' });
+const mono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono' });
+const stamp = IBM_Plex_Sans_Condensed({ subsets: ['latin'], weight: '700', variable: '--font-stamp' });
+const serif = Newsreader({ subsets: ['latin'], variable: '--font-serif' });
 
 export const metadata: Metadata = {
   title: 'SecondEyes',
-  description: 'A second pair of eyes on every payment your AI agent makes.',
+  description: 'Your AI agent pays the bills. SecondEyes checks every payment against what you wrote before any money moves.',
 };
 
-// The banner reads the server's mode on every request, never a build-time copy.
-export const dynamic = 'force-dynamic';
-
+// Only what every page shares. The site header lives in (site)/layout.tsx: the invoice pages stand for
+// someone else's website, and the demo agent reads every word on them.
 export default function RootLayout({ children }: { children: ReactNode }) {
-  const testJudge = process.env.JUDGE_MODE === 'synthetic';
   return (
-    <html lang="en">
-      <body>
-        {testJudge && (
-          <div className="banner" role="status">
-            TEST JUDGE, not NEAR AI. Verdicts on this site come from a development key, not a model.
-          </div>
-        )}
-        <WalletProvider>
-          <header className="top">
-            <Link href="/" className="brand">
-              SecondEyes
-            </Link>
-            <div className="top-right">
-              <span className="chip" title={`Contract ${CONTRACT_ID}`}>
-                {NETWORK}
-              </span>
-              <WalletButton />
-            </div>
-          </header>
-          <main>{children}</main>
-        </WalletProvider>
-      </body>
+    <html lang="en" className={`${sans.variable} ${mono.variable} ${stamp.variable} ${serif.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

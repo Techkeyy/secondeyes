@@ -8,5 +8,9 @@ export const EXPLORER = NETWORK === 'testnet' ? 'https://testnet.nearblocks.io' 
 export const PAYEE_ACME = process.env.NEXT_PUBLIC_PAYEE_ACME ?? 'secondeyes-owner.testnet';
 export const PAYEE_ATTACKER = process.env.NEXT_PUBLIC_PAYEE_ATTACKER ?? 'acme-supplies-payments.testnet';
 
+// The real, finished budget the landing page reads live. It must exist on CONTRACT_ID.
+export const SHOWCASE_MANDATE = Number(process.env.NEXT_PUBLIC_SHOWCASE_MANDATE ?? 13);
+export const FAUCET_URL = NETWORK === 'testnet' ? 'https://near-faucet.io/' : null;
+
 export const MAX_ATTEMPTS = 20;
 export const MAX_INSTRUCTION_LEN = 500;

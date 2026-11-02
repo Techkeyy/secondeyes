@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { useWallet } from '@/lib/wallet';
 
 export function WalletButton() {
-  const { accountId, ready, connect, disconnect } = useWallet();
+  const { accountId, ready, restoring, connect, disconnect } = useWallet();
   const [error, setError] = useState('');
 
-  if (!ready) return <span className="muted">Loading wallet</span>;
   if (accountId) {
     return (
       <span className="wallet">
@@ -20,12 +19,19 @@ export function WalletButton() {
       </span>
     );
   }
+  if (restoring || !ready) return <span className="net">{restoring ? 'Finding your wallet' : 'Loading wallets'}</span>;
   return (
     <span className="wallet">
-      <button className="primary small" onClick={() => connect().catch((e) => setError(e.message))}>
-        Connect wallet
+      <button
+        className="on-desk small"
+        onClick={() => {
+          setError('');
+          connect().catch((e) => e.message !== 'cancelled' && setError(e.message));
+        }}
+      >
+        Connect
       </button>
-      {error && <span className="error">{error}</span>}
+      {error && <span className="error-on-desk">{error}</span>}
     </span>
   );
 }

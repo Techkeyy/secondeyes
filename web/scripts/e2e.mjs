@@ -50,7 +50,7 @@ const check = (label, ok, detail = '') => {
 console.log('0. server');
 const home = await (await fetch(new URL('/', a.base))).text();
 check('home page shows the TEST JUDGE banner', home.includes('TEST JUDGE, not NEAR AI'));
-for (const p of ['/', '/invoice/clean', '/invoice/poisoned', '/mandate/0']) {
+for (const p of ['/', '/invoice/clean', '/invoice/poisoned', '/budget/0']) {
   const t = await (await fetch(new URL(p, a.base))).text();
   check(`${p} carries the banner`, t.includes('TEST JUDGE, not NEAR AI'));
 }
