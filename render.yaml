@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: secondeyes
+    runtime: node
+    plan: free
+    rootDir: web
+    buildCommand: npx -y pnpm@11.19.0 install --frozen-lockfile && npx -y pnpm@11.19.0 build
+    startCommand: npx next start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 24.14.0
+      - key: NEXT_PUBLIC_NETWORK
+        value: testnet
+      - key: NEXT_PUBLIC_CONTRACT_ID
+        value: secondeyes-dev.testnet
+      - key: NEXT_PUBLIC_PAYEE_ACME
+        value: secondeyes-owner.testnet
+      - key: NEXT_PUBLIC_PAYEE_ATTACKER
+        value: acme-supplies-payments.testnet
+      - key: NEXT_PUBLIC_SHOWCASE_MANDATE
+        value: 13
+      # Paste this one in Render when it asks. It is never stored in the repo.
+      - key: NEAR_AI_API_KEY
+        sync: false

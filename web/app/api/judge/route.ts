@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { clientIp, rateLimited } from '@/lib/server/limit';
+import { clientIp, rateLimited, GLOBAL_PER_MINUTE } from '@/lib/server/limit';
 import { judge, JudgeError } from '@/lib/server/judge';
 
 export const dynamic = 'force-dynamic';
@@ -7,7 +7,7 @@ export const dynamic = 'force-dynamic';
 const fail = (error: string, status: number) => NextResponse.json({ error }, { status });
 
 export async function POST(req: Request) {
-  if (rateLimited('judge', clientIp(req), 10)) return fail('Too many requests. Wait a minute and try again.', 429);
+  if (rateLimited('judge', clientIp(req), 10) || rateLimited('judge', 'everyone', GLOBAL_PER_MINUTE)) return fail('Too many requests. Wait a minute and try again.', 429);
 
   let body: Record<string, unknown>;
   try {
