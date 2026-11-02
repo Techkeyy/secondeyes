@@ -30,7 +30,8 @@ export async function POST(req: Request) {
 
   try {
     const mode = judgeMode();
-    const page = await fetch(new URL(path, req.url), { cache: 'no-store' });
+    // Behind a proxy req.url can say https on the internal port, so read our own page directly.
+    const page = await fetch(new URL(path, process.env.PORT ? `http://127.0.0.1:${process.env.PORT}` : req.url), { cache: 'no-store' });
     if (!page.ok) return fail(`Could not read ${path} (HTTP ${page.status}).`, 502);
     const pageText = htmlToText(await page.text());
 
