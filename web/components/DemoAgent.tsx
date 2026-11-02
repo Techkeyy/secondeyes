@@ -20,7 +20,7 @@ const STAGES = ['The agent reads the invoice', 'It decides what to pay', 'The ju
 function nextTry(m: Mandate) {
   const paidAt = m.attempts.findIndex((a) => a.outcome === 'Paid');
   if (paidAt >= 0 && m.attempts.slice(paidAt).some((a) => a.outcome === 'Refused')) {
-    return { path: null, title: 'That is the whole check', text: 'A scam refused, the real bill paid, a repeat refused. Close this budget to take back what is left, or keep trying invoices.' };
+    return { path: null, title: 'That is the whole check', text: 'A scam refused, the real bill paid, a repeat refused. Now connect your own agent below, or close this budget to take back what is left.' };
   }
   if (paidAt >= 0) {
     return { path: HONEST, title: 'Now try paying it twice', text: 'Give the agent the honest invoice again. It is already paid, so the judge should refuse it.' };

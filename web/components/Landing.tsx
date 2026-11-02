@@ -10,6 +10,10 @@ const TAPE = ['Scam invoice: refused', 'Real bill: paid', 'Same bill twice: refu
 
 const QUESTIONS = [
   {
+    q: 'Does it work with my own agent?',
+    a: 'Yes. Apps that support MCP, such as Claude Desktop and Cursor, can plug it in as a tool, and anything else can run it as a command. Your budget page gives you the setup to copy. Your agent’s key stays on your machine.',
+  },
+  {
     q: 'Who holds the money?',
     a: 'A contract on the NEAR blockchain, not your agent and not us. Only you can close a budget, and closing sends back whatever is left.',
   },

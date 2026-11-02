@@ -2,8 +2,16 @@
   "name": "secondeyes-agent",
   "private": true,
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.1.0",
+  "scripts": {
+    "package": "node package.mjs"
+  },
   "dependencies": {
-    "near-api-js": "^7.4.0"
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "near-api-js": "^7.4.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

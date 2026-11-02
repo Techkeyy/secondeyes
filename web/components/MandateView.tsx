@@ -9,6 +9,7 @@ import { errorText, getMandate, outcomeFailure } from '@/lib/near';
 import type { Mandate } from '@/lib/types';
 import { formatNear } from '@/lib/units';
 import { useWallet } from '@/lib/wallet';
+import { ConnectAgent } from './ConnectAgent';
 import { DemoAgent } from './DemoAgent';
 import { Stamp } from './Stamp';
 
@@ -19,7 +20,6 @@ export function MandateView({ id }: { id: number }) {
   const [m, setM] = useState<Mandate | null | undefined>(undefined);
   const [error, setError] = useState('');
   const [secret, setSecret] = useState<string | null>(null);
-  const [reveal, setReveal] = useState(false);
   const [paste, setPaste] = useState('');
   const [closing, setClosing] = useState(false);
   const [notice, setNotice] = useState('');
@@ -150,6 +150,7 @@ export function MandateView({ id }: { id: number }) {
               </div>
             </section>
           ))}
+        {live && secret && <ConnectAgent mandate={m} secret={secret} onWatch={refresh} />}
         {full && !m.closed && <p className="alert">All {MAX_ATTEMPTS} attempts are used. Close this budget to take your money back, then create a new one.</p>}
         {expired && !m.closed && !full && <p className="alert">This budget has expired, so the agent can no longer pay from it. Close it to take your money back.</p>}
 
@@ -221,24 +222,6 @@ export function MandateView({ id }: { id: number }) {
               Only the owner, <span className="mono wrap">{m.owner}</span>, can close this budget. {accountId ? 'You are connected as another account.' : 'Connect that wallet to close it.'}
             </p>
           ))}
-
-        {secret && !m.closed && (
-          <details className="side-details">
-            <summary>Use your own agent</summary>
-            <p>
-              Give your agent this key as <span className="mono">AGENT_KEY</span>. It can only ask to pay from this budget, and closing the budget deletes it. Keep it private.
-            </p>
-            <div className="actions">
-              <button className="ghost small" onClick={() => setReveal(!reveal)}>
-                {reveal ? 'Hide key' : 'Show key'}
-              </button>
-              <button className="ghost small" onClick={() => navigator.clipboard.writeText(secret)}>
-                Copy key
-              </button>
-            </div>
-            {reveal && <p className="mono wrap">{secret}</p>}
-          </details>
-        )}
 
         <details className="side-details">
           <summary>Technical details</summary>
