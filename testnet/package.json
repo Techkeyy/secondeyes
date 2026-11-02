@@ -1,0 +1,12 @@
+{
+  "name": "secondeyes-testnet-check",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "scripts": {
+    "test": "node --test check.test.mjs"
+  },
+  "dependencies": {
+    "near-api-js": "^7.4.0"
+  }
+}

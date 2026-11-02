@@ -1,0 +1,3 @@
+# near-sdk uses NEAR host functions (panic messages, sha256) only under this cfg. cargo-near sets it.
+[target.wasm32-unknown-unknown]
+rustflags = ["--cfg", "near"]

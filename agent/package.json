@@ -1,0 +1,9 @@
+{
+  "name": "secondeyes-agent",
+  "private": true,
+  "type": "module",
+  "version": "0.0.0",
+  "dependencies": {
+    "near-api-js": "^7.4.0"
+  }
+}
