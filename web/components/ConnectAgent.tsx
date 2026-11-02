@@ -124,7 +124,7 @@ export function ConnectAgent({ mandate, secret, onWatch }: { mandate: Mandate; s
               </>
             )}
             <li aria-live="polite">
-              <h3>{latest ? 'Your agent tried a payment' : 'Watching for your agent'}</h3>
+              <h3>{latest ? 'Latest attempt on this budget' : 'Watching for your agent'}</h3>
               {latest ? (
                 <div className="connect-result" key={latest.nonce}>
                   <Stamp outcome={latest.outcome} />

@@ -4,6 +4,8 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState, ty
 import type { NearConnector } from '@hot-labs/near-connect';
 import { WalletPicker, type WalletOption } from '@/components/WalletPicker';
 import { CONTRACT_ID, NETWORK } from './config';
+import { provider } from './near';
+import { callThroughNightly, nightlyExtension } from './nightly';
 
 interface WalletState {
   accountId: string | null;
@@ -43,8 +45,6 @@ export function WalletProvider({ children }: { children: ReactNode }) {
       const c = new NearConnector({
         network: NETWORK,
         features: { signAndSendTransaction: true },
-        // On testnet, Nightly's extension never finishes sending after approval and nothing reaches the chain.
-        excludedWallets: NETWORK === 'testnet' ? ['nightly-wallet'] : [],
       });
       connector.current = c;
       c.on('wallet:signIn', (t) => setAccountId(t.accounts[0]?.accountId ?? null));
@@ -100,6 +100,8 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   const call = useCallback(
     async (method: string, args: Record<string, unknown>, deposit: bigint, tgas: number) => {
       const wallet = await connector.current!.wallet();
+      const nightly = NETWORK === 'testnet' && wallet.manifest.id === 'nightly-wallet' ? nightlyExtension() : undefined;
+      if (nightly) return callThroughNightly(nightly, provider, CONTRACT_ID, method, args, deposit, tgas);
       return wallet.signAndSendTransaction({
         network: NETWORK,
         receiverId: CONTRACT_ID,
