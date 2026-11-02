@@ -2,7 +2,7 @@ services:
   - type: web
     name: secondeyes
     runtime: node
-    plan: free
+    plan: starter
     rootDir: web
     buildCommand: npx -y pnpm@11.19.0 install --frozen-lockfile && npx -y pnpm@11.19.0 build
     startCommand: npx next start
