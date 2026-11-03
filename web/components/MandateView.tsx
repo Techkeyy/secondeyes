@@ -19,7 +19,7 @@ export function MandateView({ id }: { id: number }) {
   const { accountId, call } = useWallet();
   const [m, setM] = useState<Mandate | null | undefined>(undefined);
   const [error, setError] = useState('');
-  const [secret, setSecret] = useState<string | null>(null);
+  const [secret, setSecret] = useState<string | null | undefined>(undefined); // undefined until this browser has been checked
   const [paste, setPaste] = useState('');
   const [closing, setClosing] = useState(false);
   const [notice, setNotice] = useState('');
@@ -136,6 +136,7 @@ export function MandateView({ id }: { id: number }) {
         </div>
 
         {live &&
+          secret !== undefined &&
           (secret ? (
             <DemoAgent mandate={m} secret={secret} onDone={refresh} />
           ) : (
