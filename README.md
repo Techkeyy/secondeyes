@@ -85,7 +85,7 @@ See `141 of 141 answers verify` and the scores below. This re-checks every recor
 node --test verify/verify-lib.test.mjs             # 8 tests
 ```
 
-The deployed contract matches this source. Building it with Rust 1.95 on Windows gives the same sha256, starting `a9793d561e320e20`, as the code on `secondeyes-dev.testnet`. Another system may produce different bytes.
+The deployed contract matches this source. Building it with Rust 1.95 on Windows gives the same sha256, starting `a9793d561e320e20`, as the code on `secondeyes-dev.testnet`. Another system may produce different bytes. I left the contract's formatting as deployed, because running `cargo fmt` changes the build hash and would break this match.
 
 ```bash
 (cd contract && cargo build --target wasm32-unknown-unknown --release)
