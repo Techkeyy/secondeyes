@@ -1,7 +1,7 @@
 // Gate 0 live check: does a NEAR AI Cloud provider_tee ed25519 signature verify
 // from the exact request and response bytes?
 //
-// Usage: node --env-file=.env spike/verify-signature.mjs [model] [--repeat N]
+// Usage: node --env-file=.env verify/verify-signature.mjs [model] [--repeat N]
 import { randomBytes } from 'node:crypto';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';

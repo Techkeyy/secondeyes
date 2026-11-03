@@ -2,7 +2,7 @@
 //
 //   node --env-file=.env testnet/real-judge.mjs --dev <account> --owner <account> --payee <account> --signer <hex> [--redeploy]
 //
-// --signer must come from a passing `spike/verify-quote.py`. Keys come from ~/.near-credentials/testnet/.
+// --signer must come from a passing `verify/verify-quote.py`. Keys come from ~/.near-credentials/testnet/.
 // Private keys and the API key are never printed or written to the results file.
 
 import fs from 'node:fs';

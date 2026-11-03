@@ -10,7 +10,7 @@ export const sha256Hex = (data: string) => crypto.createHash('sha256').update(da
 
 /**
  * Sends the exact request bytes the contract built, keeps the exact response bytes, and fetches the
- * provider_tee signature for that completion. Mirrors spike/verify-signature.mjs.
+ * provider_tee signature for that completion. Mirrors verify/verify-signature.mjs.
  */
 export async function judgeWithNearAi(request: string, apiKey: string): Promise<JudgeAnswer> {
   const res = await fetch(`${BASE}/v1/chat/completions`, {

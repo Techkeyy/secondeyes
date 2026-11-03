@@ -99,7 +99,7 @@ export function ConnectAgent({ mandate, secret, onWatch }: { mandate: Mandate; s
                 {mode === 'link'
                   ? 'The easiest way. Nothing to install. It works with agent apps that let you add a tool by URL, usually called a custom connector or remote MCP server.'
                   : mode === 'app'
-                  ? 'It works with apps that support MCP, the standard way to plug tools into an agent, such as Claude Desktop and Cursor. You need Node.js 20 or newer.'
+                  ? 'It works with apps that support MCP, the standard way to plug tools into an agent, and keeps the key on your machine. You need Node.js 20 or newer.'
                   : 'Any program that can run a command can use it. It answers in JSON and exits with 0 only when the money was sent. You need Node.js 20 or newer.'}
               </p>
               <pre className="connect-code" tabIndex={0}>
@@ -126,7 +126,7 @@ export function ConnectAgent({ mandate, secret, onWatch }: { mandate: Mandate; s
             {mode === 'app' && (
               <li>
                 <h3>Paste it into your agent app</h3>
-                  <p>Put it in the app’s MCP settings file, then restart the app. In Claude Desktop that is Settings, Developer, Edit Config. In Cursor it is mcp.json.</p>
+                  <p>Put it in the app’s MCP settings file, then restart the app.</p>
                   <p className="hint">On Windows, if the tool does not start, change the command to “cmd” and put “/c” and “npx” first in the args.</p>
               </li>
             )}

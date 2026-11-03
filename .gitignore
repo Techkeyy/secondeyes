@@ -7,6 +7,4 @@ dist/
 .next/
 *.log
 
-.claude/
-director.md
-submission/
+testnet/*-20*.json

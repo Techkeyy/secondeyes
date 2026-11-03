@@ -1,5 +1,5 @@
 # Gate 1 check: is the judge's signing key bound to a genuine Intel TDX quote, fresh for our nonce?
-# Usage: pip install dcap-qvl==0.7.0, then: python spike/verify-quote.py [model]
+# Usage: pip install dcap-qvl==0.7.0, then: python verify/verify-quote.py [model]
 import asyncio, hashlib, json, secrets, sys, urllib.parse, urllib.request
 
 import dcap_qvl

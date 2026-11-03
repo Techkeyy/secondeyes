@@ -6,7 +6,7 @@
 //! over bytes it rebuilt itself. The contract never trusts the agent, the backend or the UI.
 //!
 //! Signed text (NEAR AI `provider_tee`): `{model_id}:{sha256_hex(request)}:{sha256_hex(response)}`,
-//! ed25519 over its UTF-8 bytes. See spike/verify-lib.mjs.
+//! ed25519 over its UTF-8 bytes. See verify/verify-lib.mjs.
 
 use near_sdk::json_types::{Base64VecU8, U128, U64};
 use near_sdk::store::LookupMap;

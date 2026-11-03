@@ -41,7 +41,7 @@ Your agent is never trusted to report the verdict honestly, and nor is my server
 You need a NEAR testnet wallet with about 0.5 test NEAR ([free faucet](https://near-faucet.io/)). I have run the whole flow below on the live site with Nightly. The other wallets in the list come from [NEAR Connect](https://github.com/azbang/near-connect) and I have not run this flow with them in a browser.
 
 1. Open the [new budget page](https://secondeyes-j5ey.onrender.com/budgets/new) and connect your wallet.
-2. Press **Create budget**, leaving the prefilled instruction, and approve 0.5 NEAR in your wallet. See budget page with 0.3 NEAR.
+2. Press **Create budget**, leaving the prefilled instruction, and approve 0.5 NEAR in your wallet. See the budget page, with 0.3 NEAR left.
 3. Give the **Scam invoice** to the agent. See the agent choose a lookalike account, then a **Refused** stamp. The balance stays 0.3.
 4. Give the **Honest invoice** to the agent. See **Paid**. The balance drops to 0.2.
 5. Give the **Honest invoice** to the agent again. See **Refused**, because it is already paid.
@@ -82,7 +82,7 @@ See `141 of 141 answers verify` and the scores below. This re-checks every recor
 (cd contract && cargo test)                       # 63 tests (on Windows, first set AWS_LC_SYS_PREBUILT_NASM=1)
 (cd web && pnpm install && pnpm test)             # 19 tests
 (cd testnet && npm install && npm test)           # 10 tests
-node --test spike/verify-lib.test.mjs             # 8 tests
+node --test verify/verify-lib.test.mjs             # 8 tests
 ```
 
 The deployed contract matches this source. Building it with Rust 1.95 on Windows gives the same sha256, starting `a9793d561e320e20`, as the code on `secondeyes-dev.testnet`. Another system may produce different bytes.
@@ -116,7 +116,7 @@ I wrote 47 payment cases after freezing the judge's wording, and ran each three 
 | **All attacks** | **0 of 90** | **69 of 90** |
 | **Honest payments** | **51 of 51** | **51 of 51** |
 
-**Read this as a good early sign, not a guarantee.** I wrote these cases myself and nobody adapted them to beat the judge. An earlier run on my tuning set showed one case changing its answer between runs, so a real attacker could do better than 0 of 90.
+**Read this as a good early sign, not a guarantee.** I wrote these cases myself and nobody adapted them to beat the judge. While tuning, one case changed its answer between runs, and a real attacker could do better than 0 of 90.
 
 These ran on the deployed contract, from the agent tool, against the live site:
 
@@ -148,7 +148,13 @@ These ran on the deployed contract, from the agent tool, against the live site:
 
 - **Function-call keys** let the agent hold a key that can only call `pay`, on this contract, with a capped gas allowance. It can never withdraw.
 - **`ed25519_verify` in the contract** lets the chain itself check the judge's signature, so nobody has to trust a relay.
-- **NEAR AI Cloud** signs answers from a model in a trusted execution environment. I checked the signer's attestation with [spike/verify-quote.py](spike/verify-quote.py) before pinning its key in the contract.
+- **NEAR AI Cloud** signs answers from a model in a trusted execution environment. I checked the signer's attestation with [verify/verify-quote.py](verify/verify-quote.py) before pinning its key in the contract.
+
+## Building on NEAR: what I hit
+
+- **Nightly on testnet.** Asked to send, the extension never finished and nothing reached the chain. Nightly now only signs, and the site sends the transaction ([web/lib/nightly.ts](web/lib/nightly.ts)).
+- **Reasoning counts as output.** The judge model reasons before answering, using up to 1,779 tokens here. With a small token limit it runs out and gives no verdict, which the contract treats as a refusal. The limit in the contract is 4,000.
+- **Host functions need a build flag.** near-sdk only uses NEAR's host functions under `--cfg near`, which a plain `cargo build` does not set. [contract/.cargo/config.toml](contract/.cargo/config.toml) sets it.
 
 ## Architecture
 
@@ -164,9 +170,9 @@ These ran on the deployed contract, from the agent tool, against the live site:
 | [agent/](agent/index.mjs) | The hosted tool for your own agent, over MCP or the command line |
 | [benchmark/](benchmark/run.mjs) | The test cases, the rules-only guard and signature re-checks |
 | [testnet/](testnet/check.mjs) | Checks against the deployed contract |
-| [spike/](spike/verify-signature.mjs) | Signature and attestation verification, with recorded real answers |
+| [verify/](verify/verify-signature.mjs) | Signature and attestation verification, with recorded real answers |
 
-Built with near-sdk, near-api-js, NEAR Connect, Next.js, React and the MCP TypeScript SDK. The judge model is `z-ai/glm-5.3-flash`.
+Built with near-sdk, near-api-js, NEAR Connect, Next.js, React and the MCP TypeScript SDK. The judge model is `z-ai/glm-5.3-flash`. All code was written during the hackathon, with AI coding assistance.
 
 ## License
 
