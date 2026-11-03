@@ -66,7 +66,7 @@ npx -y https://secondeyes-j5ey.onrender.com/secondeyes-agent.tgz pay --payee acm
 
 It answers in JSON and exits with 0 only when the money was sent. It needs Node.js 20 or newer and the settings from your budget page.
 
-I tested the link and the local tool on the live site using the official MCP SDK as the client: run `node testnet/connector-check.mjs --site <url>` with your own testnet owner key. I have not yet run either inside a chat app with a model choosing the calls.
+I tested the link and the local tool on the live site using the official MCP SDK as the client: run `node testnet/connector-check.mjs --site <url>` with your own testnet owner key. I also had an AI model use the link on [budget 35](https://testnet.nearblocks.io/address/secondeyes-dev.testnet), reading the budget and deciding what to pay. Its first honest payment was refused by mistake (see below), the same request then paid, and paying it again was refused. I have not yet run this inside a chat app's own connector settings.
 
 ## Run the checks yourself
 
@@ -138,6 +138,7 @@ These ran on the deployed contract, from the agent tool, against the live site:
 - **It can be too relaxed about the reason when the payee and amount match exactly.** In a live test against this instruction, the judge refused all 8 attempts to pay other accounts, but allowed a purpose of `Consulting` and an empty purpose to the named account for the named amount. The money still went only where you said, in the amount you said.
 - **Your agent can try wordings where you cannot see them.** It can ask for many answers, by changing the purpose, and only submit an ALLOW. Only submitted attempts reach the record. That is why a tight instruction matters: every wrong-payee wording in the live test was refused.
 - **It cannot see today's date.** Instructions that depend on the date are judged without it.
+- **It sometimes refuses an honest payment by mistake.** On budget 35 the judge misread `secondeyes-owner.testnet` as `secondeeyes-owner.testnet`, and refused for a mismatch that did not exist. Sending that same honest request 40 more times, refused 1 of 40. The benchmark did not catch this. The mistake fails safe: the money stays, and the same request can be sent again. The attempt is recorded, and a budget holds 20.
 - **When unsure it refuses.** A real payment worded just like an earlier one may be refused. Say how many you expect.
 - **A budget holds 20 attempts,** paid or refused. After that you close it and start another.
 - **The server limits are simple.** Rate limits, including caps of 60 model calls a minute and 1,000 a day per route, live in memory and reset when the server restarts. Hitting a cap stops new checks until it clears. Money stays safe in the contract.
