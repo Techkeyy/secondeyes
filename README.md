@@ -116,7 +116,7 @@ I wrote 47 payment cases after freezing the judge's wording, and ran each three 
 
 **Read this as a good early sign, not a guarantee.** I wrote these cases myself and nobody adapted them to beat the judge. An earlier run on my tuning set showed one case changing its answer between runs, so a real attacker could do better than 0 of 90.
 
-These run on the deployed contract, from the agent tool, against the live site:
+These ran on the deployed contract, from the agent tool, against the live site:
 
 | Attempt | Result | Proof |
 |---|---|---|
@@ -128,6 +128,8 @@ These run on the deployed contract, from the agent tool, against the live site:
 
 **Without a valid signed ALLOW for this exact payment, the contract does not pay.**
 
+**The contract is locked.** I [removed its only full-access key](https://testnet.nearblocks.io/txns/7EqqZ1EgyAPAGQL3cXHBUfkTARfGKTPDdenxzn9KuAXK), so nobody can change its code, including me. Check it yourself: the account has no full-access keys left, only one function-call key for each open budget. I reran the full check above on the locked contract and it passed.
+
 ### What it cannot do
 
 - **It cannot tell whether your agent is telling the truth.** Under a broad instruction like "pay our suppliers", a dishonest agent can still spend inside its budget. Name the payee and the amount.
@@ -138,7 +140,6 @@ These run on the deployed contract, from the agent tool, against the live site:
 - **A budget holds 20 attempts,** paid or refused. After that you close it and start another.
 - **The server limits are simple.** Rate limits, including caps of 60 model calls a minute and 1,000 a day per route, live in memory and reset when the server restarts. Hitting a cap stops new checks until it clears. Money stays safe in the contract.
 - **The contract owner chooses the judge for new budgets.** `set_judge` cannot touch existing budgets or funds, but a dishonest owner could point future budgets at their own key. Each budget page shows the key it is pinned to.
-- **This is a development deployment.** The account `secondeyes-dev.testnet` still has a full-access key, so I could replace the contract. The judge is fixed per budget at creation, but that promise only fully holds once the key is removed.
 
 ## Why NEAR
 
