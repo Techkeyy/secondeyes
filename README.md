@@ -51,9 +51,11 @@ The agent in this demo really is fooled by the scam invoice. It runs a real mode
 
 ## Connect your own agent
 
-Your budget page gives you a setup to copy, holding this budget's details and the agent's key. The key signs on your machine and is hidden on screen by default.
+Your budget page shows three ways to connect, all hidden on screen by default. They add two tools, `secondeyes_budget` and `secondeyes_pay`.
 
-**Apps that support MCP:** paste the setup into the app's MCP settings. It adds two tools, `secondeyes_budget` and `secondeyes_pay`.
+**One link, nothing to install:** copy the link and paste it into any agent app that can add a remote MCP server by URL, usually called a custom connector. The link holds your agent's key, so treat it like a password. My server uses the key to sign each request and does not store it, though a request log along the way could record the link. The link can only ask to pay from that budget, and closing the budget kills it.
+
+**Keep the key on your machine:** paste the setup into an app's MCP settings file. It runs locally, so the key signs on your machine and never reaches my server.
 
 **Anything that can run a command:**
 
@@ -64,7 +66,7 @@ npx -y https://secondeyes-j5ey.onrender.com/secondeyes-agent.tgz pay --payee acm
 
 It answers in JSON and exits with 0 only when the money was sent. It needs Node.js 20 or newer and the settings from your budget page.
 
-I tested this tool from the live site using the official MCP SDK as the client. I have not yet run it inside a chat app with a model choosing the calls.
+I tested the link and the local tool on the live site using the official MCP SDK as the client: run `node testnet/connector-check.mjs --site <url>` with your own testnet owner key. I have not yet run either inside a chat app with a model choosing the calls.
 
 ## Run the checks yourself
 
@@ -152,6 +154,7 @@ These ran on the deployed contract, from the agent tool, against the live site:
 | Path | Job |
 |---|---|
 | [contract/src/lib.rs](contract/src/lib.rs) | Holds budgets, checks limits, rebuilds requests, verifies signatures, pays |
+| [web/app/mcp](web/app/mcp/%5Btoken%5D/route.ts) | The one-link connector, a stateless remote MCP server |
 | [web/app/api/judge](web/app/api/judge/route.ts) | Relays a payment to NEAR AI and returns the signed answer |
 | [web/app/api/agent-read](web/app/api/agent-read/route.ts) | Runs the demo agent's model over a sample invoice |
 | [web/lib/agent.ts](web/lib/agent.ts) | The demo agent that runs in your browser |

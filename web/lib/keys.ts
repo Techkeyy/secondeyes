@@ -1,6 +1,6 @@
 import { KeyPair } from 'near-api-js';
 
-// The agent key lives only in this browser. It is never sent to the server.
+// The agent key lives only in this browser. The server sees it only if the owner chooses to use a connector link, and never stores it.
 const PREFIX = 'secondeyes:agent:';
 
 export interface AgentKey {
