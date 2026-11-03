@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { isAccountId, sanitisePurpose } from '@/lib/fields';
 import { parseNear } from '@/lib/units';
 import { chat } from '@/lib/server/nearai';
-import { clientIp, rateLimited, GLOBAL_PER_MINUTE } from '@/lib/server/limit';
+import { clientIp, overGlobalLimit, rateLimited } from '@/lib/server/limit';
 import { judgeMode } from '@/lib/server/mode';
 import { htmlToText } from '@/lib/server/pagetext';
 import { syntheticRead } from '@/lib/server/synthetic';
@@ -18,7 +18,7 @@ const SYSTEM =
 const fail = (error: string, status: number) => NextResponse.json({ error }, { status });
 
 export async function POST(req: Request) {
-  if (rateLimited('agent-read', clientIp(req), 10) || rateLimited('agent-read', 'everyone', GLOBAL_PER_MINUTE)) return fail('Too many requests. Wait a minute and try again.', 429);
+  if (rateLimited('agent-read', clientIp(req), 10) || overGlobalLimit('agent-read')) return fail('Too many requests. Wait a minute and try again.', 429);
 
   let path: unknown;
   try {

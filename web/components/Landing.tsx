@@ -27,7 +27,7 @@ const QUESTIONS = [
   },
   {
     q: 'What can it not catch?',
-    a: 'It cannot tell whether what your agent says is true. Under a broad instruction like “pay our suppliers”, a dishonest agent can still spend inside its budget, so name the payee and the amount. It cannot see today’s date either. When unsure it refuses, so a real payment worded just like an earlier one may be refused. Say how many you expect.',
+    a: 'It cannot tell whether what your agent says is true. Under a broad instruction like “pay our suppliers”, a dishonest agent can still spend inside its budget, so name the payee and the amount. Your agent can also try several wordings and submit only the one that passes. It cannot see today’s date either. When unsure it refuses, so a real payment worded just like an earlier one may be refused. Say how many you expect.',
   },
 ];
 

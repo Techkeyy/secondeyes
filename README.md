@@ -131,10 +131,13 @@ These run on the deployed contract, from the agent tool, against the live site:
 ### What it cannot do
 
 - **It cannot tell whether your agent is telling the truth.** Under a broad instruction like "pay our suppliers", a dishonest agent can still spend inside its budget. Name the payee and the amount.
+- **It can be too relaxed about the reason when the payee and amount match exactly.** In a live test against this instruction, the judge refused all 8 attempts to pay other accounts, but allowed a purpose of `Consulting` and an empty purpose to the named account for the named amount. The money still went only where you said, in the amount you said.
+- **Your agent can try wordings where you cannot see them.** It can ask for many answers, by changing the purpose, and only submit an ALLOW. Only submitted attempts reach the record. That is why a tight instruction matters: every wrong-payee wording in the live test was refused.
 - **It cannot see today's date.** Instructions that depend on the date are judged without it.
 - **When unsure it refuses.** A real payment worded just like an earlier one may be refused. Say how many you expect.
 - **A budget holds 20 attempts,** paid or refused. After that you close it and start another.
-- **The server limits are simple.** Rate limits live in memory and reset when the server restarts.
+- **The server limits are simple.** Rate limits, including caps of 60 model calls a minute and 1,000 a day per route, live in memory and reset when the server restarts. Hitting a cap stops new checks until it clears. Money stays safe in the contract.
+- **The contract owner chooses the judge for new budgets.** `set_judge` cannot touch existing budgets or funds, but a dishonest owner could point future budgets at their own key. Each budget page shows the key it is pinned to.
 - **This is a development deployment.** The account `secondeyes-dev.testnet` still has a full-access key, so I could replace the contract. The judge is fixed per budget at creation, but that promise only fully holds once the key is removed.
 
 ## Why NEAR
