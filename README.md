@@ -174,6 +174,10 @@ These ran on the deployed contract, from the agent tool, against the live site:
 
 Built with near-sdk, near-api-js, NEAR Connect, Next.js, React and the MCP TypeScript SDK. The judge model is `z-ai/glm-5.3-flash`. All code was written during the hackathon, with AI coding assistance.
 
+## Also by me
+
+**[Epoch](https://github.com/Techkeyy/epoch)** ([live site](https://epoch-near.onrender.com)), my other NEAR HACKATHON project: type a NEAR account and see when the keys that control it today took over, so an account's old history cannot vouch for a new owner. The two are independent projects.
+
 ## License
 
 [MIT](LICENSE)
