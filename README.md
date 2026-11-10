@@ -70,6 +70,8 @@ I tested the link and the local tool on the live site using the official MCP SDK
 
 ## Run the checks yourself
 
+Every check below also runs on a clean machine on each push: [see the latest runs](https://github.com/Techkeyy/secondeyes/actions/workflows/checks.yml).
+
 No keys, no accounts and no model calls:
 
 ```bash
