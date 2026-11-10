@@ -174,6 +174,14 @@ These ran on the deployed contract, from the agent tool, against the live site:
 
 Built with near-sdk, near-api-js, NEAR Connect, Next.js, React and the MCP TypeScript SDK. The judge model is `z-ai/glm-5.3-flash`. All code was written during the hackathon, with AI coding assistance.
 
+## Hackathon facts
+
+- **Tracks:** AI Security & Defense (`security`) and Agent Economy (`agents`).
+- **NEAR integrations:** a contract on NEAR testnet ([secondeyes-dev.testnet](https://testnet.nearblocks.io/address/secondeyes-dev.testnet), locked), function-call access keys for the agent, `ed25519_verify` of NEAR AI Cloud signatures inside the contract, NEAR AI Cloud for the judge model, and NEAR Connect for wallets.
+- **Built in the window:** everything in this repository was written between 1 and 14 November 2026 (first commit 2 November). There is no pre-hackathon code. The submitted state is tagged [`hackathon-submission`](https://github.com/Techkeyy/secondeyes/commits/hackathon-submission).
+- **Libraries:** near-sdk 5.30, near-api-js 7, @hot-labs/near-connect 0.12, Next.js 16, React 19, the MCP TypeScript SDK and zod; ed25519-dalek and sha2 in contract tests. No templates or boilerplate. Code was written with AI coding assistance.
+- **Other chains:** none. This is not a port of an existing product.
+
 ## Also by me
 
 **[Epoch](https://github.com/Techkeyy/epoch)** ([live site](https://epoch-near.onrender.com)), my other NEAR HACKATHON project: type a NEAR account and see when the keys that control it today took over, so an account's old history cannot vouch for a new owner. The two are independent projects.
