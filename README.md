@@ -2,7 +2,7 @@
 
 A second pair of eyes on every payment your AI agent makes.
 
-**[Live site](https://secondeyes-j5ey.onrender.com)** · [Contract on testnet](https://testnet.nearblocks.io/address/secondeyes-dev.testnet) · [Benchmark results](benchmark/results-2026-11-02T11-43-17-328Z.json)
+**[Live site](https://secondeyes-j5ey.onrender.com)** · **[Demo video](https://youtu.be/J0Itl9E2YBo)** · [Demo post on X](https://x.com/Praise_Prodigyy/status/2120204756559835548) · [Contract on testnet](https://testnet.nearblocks.io/address/secondeyes-dev.testnet) · [Benchmark results](benchmark/results-2026-11-02T11-43-17-328Z.json)
 
 You give an AI agent a budget and a plain-language instruction. Every payment it asks for is checked against that instruction before any money moves, and a smart contract, not your agent, enforces the answer.
 
