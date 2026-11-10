@@ -1,0 +1,49 @@
+# Runs every check the README lists, on a clean machine, on every push. No keys, accounts or model calls.
+name: checks
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  contract:
+    name: Contract tests (cargo test)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.95.0
+      - run: cargo test
+        working-directory: contract
+
+  web:
+    name: Web app (typecheck, tests)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: npx -y pnpm@11.19.0 install --frozen-lockfile
+        working-directory: web
+      - run: npx -y pnpm@11.19.0 typecheck
+        working-directory: web
+      - run: npx -y pnpm@11.19.0 test
+        working-directory: web
+
+  evidence:
+    name: Benchmark signatures, verification and testnet helpers
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Re-check all recorded judge signatures
+        run: node benchmark/run.mjs --holdout --check benchmark/results-2026-11-02T11-43-17-328Z.json
+      - name: Signature and attestation verification tests
+        run: node --test verify/verify-lib.test.mjs
+      - name: Testnet helper tests
+        run: npm ci && npm test
+        working-directory: testnet
